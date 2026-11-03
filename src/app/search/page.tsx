@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Search, ArrowUpDown, ShoppingBag } from 'lucide-react';
 import { useStore } from '@/store/useStore';
 import { ProductCard } from '@/components/storefront/ProductCard';
 
-export default function SearchResultsPage() {
+// Inner component that reads searchParams — must be inside <Suspense>
+function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   const { products } = useStore();
@@ -99,5 +100,34 @@ export default function SearchResultsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+// Suspense fallback shown during static prerendering
+function SearchFallback() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="h-8 w-64 rounded-xl bg-slate-100 animate-pulse" />
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div key={i} className="rounded-2xl border border-slate-100 bg-white p-3 space-y-2 animate-pulse">
+            <div className="h-36 rounded-xl bg-slate-100" />
+            <div className="h-3 w-3/4 rounded bg-slate-100" />
+            <div className="h-3 w-1/2 rounded bg-slate-100" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Default export wraps inner component in Suspense (required by Next.js for useSearchParams)
+export default function SearchResultsPage() {
+  return (
+    <Suspense fallback={<SearchFallback />}>
+      <SearchResults />
+    </Suspense>
   );
 }
