@@ -139,13 +139,13 @@ class StructuredLogger {
     });
   }
 
-  public logOrderCreated(invoiceNumber: string, grandTotal: number, customerId: string, orderType: string) {
+  public logOrderCreated(invoiceNumber: string, grandTotal: number, customerId: string, orderType: string = 'delivery') {
     this.info(`[Order] New order created: ${invoiceNumber}`, {
       action: 'ORDER_CREATED',
       invoiceNumber,
       grandTotal,
       customerId,
-      orderType,
+      orderType: orderType || 'delivery',
     });
   }
 

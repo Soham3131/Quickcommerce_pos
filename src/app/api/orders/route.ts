@@ -63,13 +63,15 @@ export async function POST(req: NextRequest) {
     // If customer is logged in, attach their authoritative customerId
     const resolvedCustomerId = session && session.role === 'customer' ? session.userId : (customerId || 'guest');
 
+    const effectiveOrderType = orderType || 'delivery';
+
     const order = await createOrderServer({
       customerId: resolvedCustomerId,
       customerName,
       customerPhone,
       customerEmail: customerEmail || session?.email,
       customerAddress,
-      orderType: orderType || 'delivery',
+      orderType: effectiveOrderType,
       items,
       orderDiscount: orderDiscount || 0,
       couponCode,
@@ -83,7 +85,7 @@ export async function POST(req: NextRequest) {
       cashierName: session?.role === 'cashier' ? session.name : 'Online Order',
     });
 
-    logger.logOrderCreated(order.invoiceNumber, order.grandTotal, resolvedCustomerId, orderType);
+    logger.logOrderCreated(order.invoiceNumber, order.grandTotal, resolvedCustomerId, order.orderType);
 
     return NextResponse.json({ success: true, order }, { status: 201 });
   } catch (err: any) {

@@ -203,10 +203,10 @@ export const razorpayVerifySchema = z.object({
  * Helper to safely validate request body against a Zod schema.
  * Returns either validated data or a standardized 400 error response.
  */
-export async function validateRequestBody<T>(
+export async function validateRequestBody<Output, Def extends z.ZodTypeDef = z.ZodTypeDef, Input = any>(
   req: Request,
-  schema: z.ZodSchema<T>
-): Promise<{ success: true; data: T } | { success: false; response: NextResponse }> {
+  schema: z.ZodType<Output, Def, Input>
+): Promise<{ success: true; data: Output } | { success: false; response: NextResponse }> {
   try {
     const rawBody = await req.json();
     const result = schema.safeParse(rawBody);
