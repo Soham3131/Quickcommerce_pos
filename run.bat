@@ -1,0 +1,6 @@
+@echo off
+cd /d "%~dp0"
+echo [1/2] Installing dependencies...
+call npm install --no-audit
+echo [2/2] Starting Next.js Dev Server...
+call npm run dev
