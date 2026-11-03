@@ -111,11 +111,25 @@ export async function getCustomerAddressesServer(customerId: string): Promise<Cu
 
 export async function addCustomerAddressServer(
   customerId: string,
-  addressData: Omit<CustomerAddress, 'id'>
+  addressData: Partial<Omit<CustomerAddress, 'id'>> & {
+    fullName: string;
+    phone: string;
+    houseNo: string;
+    street: string;
+    area: string;
+    city: string;
+    state: string;
+    pincode: string;
+  }
 ): Promise<CustomerAddress> {
   await connectToDatabase();
   const newId = `addr-${Date.now()}`;
-  const newAddress: CustomerAddress = { ...addressData, id: newId };
+  const newAddress: CustomerAddress = {
+    ...addressData,
+    label: (addressData.label as 'Home' | 'Work' | 'Other') || 'Home',
+    isDefault: Boolean(addressData.isDefault),
+    id: newId,
+  };
 
   if (isDatabaseConnected()) {
     const doc = await CustomerModel.findById(customerId);

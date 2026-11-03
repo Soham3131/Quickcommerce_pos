@@ -54,7 +54,11 @@ export async function POST(
       return validation.response;
     }
 
-    const address = await addCustomerAddressServer(params.id, validation.data);
+    const address = await addCustomerAddressServer(params.id, {
+      ...validation.data,
+      label: validation.data.label || 'Home',
+      isDefault: validation.data.isDefault ?? false,
+    });
     logger.info('[Customers] Address added', { customerId: params.id, addressId: address.id });
 
     return NextResponse.json({ success: true, address }, { status: 201 });
