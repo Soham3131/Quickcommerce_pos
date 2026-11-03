@@ -9,7 +9,7 @@ export type ProductCategory =
   | 'Household & Cleaning'
   | 'Frozen Foods';
 
-export type UnitType = 'kg' | 'g' | 'L' | 'ml' | 'pcs' | 'pack' | 'box';
+export type UnitType = 'kg' | 'g' | 'L' | 'ml' | 'pcs' | 'pack' | 'box' | 'bottle';
 
 export interface Product {
   id: string;
@@ -62,7 +62,10 @@ export interface Customer {
   totalOrders: number;
   totalPurchases: number;
   outstandingBalance: number;
+  addresses?: CustomerAddress[];
+  status?: 'active' | 'inactive';
   createdAt: string;
+  updatedAt?: string;
 }
 
 export type OrderType = 'in-store' | 'takeaway' | 'delivery';
@@ -116,6 +119,7 @@ export interface Order {
   customerId: string;
   customerName: string;
   customerPhone: string;
+  customerEmail?: string;
   customerAddress?: string;
   items: OrderItem[];
   subtotal: number;
@@ -136,6 +140,12 @@ export interface Order {
   deliveryInstructions?: string;
   appliedCoupon?: string;
   couponDiscount?: number;
+  stockDeducted?: boolean;
+  cancelReason?: string;
+  idempotencyKey?: string;
+  razorpayOrderId?: string;
+  razorpayPaymentId?: string;
+  razorpaySignature?: string;
   createdAt: string;
   completedAt?: string;
 }
@@ -171,8 +181,8 @@ export type CouponDiscountType = 'percentage' | 'fixed' | 'free_shipping';
 export interface DemoCoupon {
   code: string;
   description: string;
-  discountType: CouponDiscountType;
-  discountValue: number; // percentage (e.g. 10) or fixed currency amount (e.g. 50)
+  discountType?: CouponDiscountType;
+  discountValue?: number; // percentage (e.g. 10) or fixed currency amount (e.g. 50)
   minOrder: number;
   maxDiscount?: number;
   isActive?: boolean;

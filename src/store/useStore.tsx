@@ -161,7 +161,7 @@ interface StoreContextType {
       Customer,
       'id' | 'createdAt' | 'loyaltyPoints' | 'totalOrders' | 'totalPurchases' | 'outstandingBalance'
     >
-  ) => Customer;
+  ) => Promise<Customer>;
   updateCustomer: (id: string, updates: Partial<Customer>) => void;
 
   // Settings
@@ -1367,7 +1367,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       Customer,
       'id' | 'createdAt' | 'loyaltyPoints' | 'totalOrders' | 'totalPurchases' | 'outstandingBalance'
     >
-  ): Customer => {
+  ): Promise<Customer> => {
     const newCust: Customer = {
       ...custData,
       id: generateId('cust'),

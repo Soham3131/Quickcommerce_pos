@@ -153,11 +153,11 @@ export const POSView: React.FC = () => {
   };
 
   // Quick Customer Creation
-  const handleCreateCustomer = (e: React.FormEvent) => {
+  const handleCreateCustomer = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCustName.trim()) return;
 
-    const created = addCustomer({
+    const created = await addCustomer({
       name: newCustName.trim(),
       phone: newCustPhone.trim() || '—',
       email: newCustEmail.trim() || `${newCustName.toLowerCase().replace(/\s+/g, '')}@example.com`,

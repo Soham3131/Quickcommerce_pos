@@ -149,7 +149,7 @@ export async function confirmOrderPayment(
       }
     );
   } else {
-    for (const ord of dataStore.orders.values()) {
+    for (const ord of Array.from(dataStore.orders.values())) {
       if (ord.invoiceNumber === orderInvoiceNumber) {
         ord.paymentStatus = 'paid';
         ord.status = 'confirmed';

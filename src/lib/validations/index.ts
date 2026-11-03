@@ -28,7 +28,7 @@ export const productCategorySchema = z.enum([
   'Frozen Foods',
 ]);
 
-export const productUnitSchema = z.enum(['kg', 'g', 'L', 'ml', 'pcs', 'pack', 'box']);
+export const productUnitSchema = z.enum(['kg', 'g', 'L', 'ml', 'pcs', 'pack', 'box', 'bottle']);
 
 export const createProductSchema = z.object({
   name: z.string().trim().min(2, 'Product name is required'),

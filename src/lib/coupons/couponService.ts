@@ -152,7 +152,8 @@ export function validateCoupon(
     const computed = Math.round((subtotal * rate) / 100);
     discountAmount = coupon.maxDiscount ? Math.min(computed, coupon.maxDiscount) : computed;
   } else if (coupon.discountType === 'fixed') {
-    discountAmount = Math.min(coupon.discountValue, subtotal);
+    const fixedVal = coupon.discountValue ?? coupon.discountPercent ?? 0;
+    discountAmount = Math.min(fixedVal, subtotal);
   }
 
   // Do not allow discount to exceed subtotal

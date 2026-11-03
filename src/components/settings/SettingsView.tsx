@@ -906,9 +906,9 @@ export const SettingsView: React.FC = () => {
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {(formData.storefront?.demoCoupons || [
-                  { code: 'WELCOME50', discountPercent: 10, description: '10% off for new shoppers', minOrder: 300 },
-                  { code: 'FREESHIP', discountPercent: 0, description: 'Free Express Shipping', minOrder: 0 },
-                  { code: 'AVANI15', discountPercent: 15, description: '15% off cart above ₹1000', minOrder: 1000 },
+                  { code: 'WELCOME50', discountType: 'percentage' as const, discountValue: 10, discountPercent: 10, description: '10% off for new shoppers', minOrder: 300 },
+                  { code: 'FREESHIP', discountType: 'free_shipping' as const, discountValue: 0, discountPercent: 0, description: 'Free Express Shipping', minOrder: 0 },
+                  { code: 'AVANI15', discountType: 'percentage' as const, discountValue: 15, discountPercent: 15, description: '15% off cart above ₹1000', minOrder: 1000 },
                 ]).map((c) => (
                   <div key={c.code} className="p-3 rounded-xl border border-slate-100 bg-slate-50 space-y-1">
                     <span className="font-mono font-black text-emerald-700 text-xs">{c.code}</span>

@@ -564,6 +564,7 @@ export const ProductsView: React.FC = () => {
                     <option value="pcs">pcs (Pieces)</option>
                     <option value="pack">pack (Packet)</option>
                     <option value="box">box (Carton Box)</option>
+                    <option value="bottle">bottle (Bottle)</option>
                   </select>
                 </div>
               </div>

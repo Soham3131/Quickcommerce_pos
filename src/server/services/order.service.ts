@@ -169,7 +169,7 @@ export async function getOrderByIdServer(id: string): Promise<Order | null> {
   const found = dataStore.orders.get(id);
   if (found) return found;
 
-  for (const ord of dataStore.orders.values()) {
+  for (const ord of Array.from(dataStore.orders.values())) {
     if (ord.invoiceNumber === id) return ord;
   }
   return null;
