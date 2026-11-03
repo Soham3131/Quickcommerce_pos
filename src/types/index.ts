@@ -199,8 +199,13 @@ export interface StorefrontSettings {
     secondaryCtaLink: string;
     imageUrl: string;
   };
+  heroBanner?: {
+    heading?: string;
+    subheading?: string;
+  };
   promoBanners: StorefrontPromoBanner[];
   freeDeliveryThreshold: number;
+  deliveryCharge?: number;
   featuredCategoryOrder: ProductCategory[];
   demoCoupons: DemoCoupon[];
 }

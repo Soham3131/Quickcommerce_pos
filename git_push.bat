@@ -4,7 +4,7 @@ echo ========================================================
 echo   Pushing TypeScript Fixes to GitHub (Quickcommerce_pos)
 echo ========================================================
 git add .
-git commit -m "fix(billing): import cn in InvoiceModal and resolve all build type errors"
+git commit -m "fix(types): add deliveryCharge and heroBanner to StorefrontSettings"
 git push origin main
 if %ERRORLEVEL% EQU 0 (
     echo.

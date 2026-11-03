@@ -106,6 +106,7 @@ export const INITIAL_SETTINGS: StoreSettings = {
       },
     ],
     freeDeliveryThreshold: 499,
+    deliveryCharge: 40,
     featuredCategoryOrder: [
       'Fruits & Vegetables',
       'Dairy & Eggs',

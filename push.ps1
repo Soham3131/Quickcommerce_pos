@@ -1,7 +1,7 @@
 Set-Location -Path $PSScriptRoot
 Write-Host "Pushing TypeScript Fixes to GitHub (Quickcommerce_pos)..." -ForegroundColor Cyan
 git add .
-git commit -m "fix(billing): import cn in InvoiceModal and resolve all build type errors"
+git commit -m "fix(types): add deliveryCharge and heroBanner to StorefrontSettings"
 git push origin main
 if ($LASTEXITCODE -eq 0) {
     Write-Host "Success! Vercel build will now pass cleanly." -ForegroundColor Green
