@@ -1,12 +1,12 @@
 @echo off
 cd /d C:\Users\soham\Desktop\avanimart
 echo ========================================================
-echo   Pushing Fix to GitHub (Quickcommerce_pos)
+echo   Pushing Avani Grocers Fixes to GitHub
 echo ========================================================
 echo.
 
 git add .
-git commit -m "fix: remove invalid page export STORE_CATEGORIES for Next.js build"
+git commit -m "fix: resolve InvoiceModal prop types and STORE_CATEGORIES export for clean Vercel build"
 echo.
 echo Pushing to origin main...
 git push origin main

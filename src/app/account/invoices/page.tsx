@@ -127,7 +127,7 @@ export default function CustomerInvoicesPage() {
       {isInvoiceOpen && selectedOrder && (
         <InvoiceModal
           order={selectedOrder}
-          settings={settings}
+          isOpen={isInvoiceOpen}
           onClose={() => {
             setIsInvoiceOpen(false);
             setSelectedOrder(null);

@@ -19,10 +19,11 @@ import { formatDateTime, generateBarcodeSvg } from '@/lib/utils';
 
 export const InvoiceModal: React.FC<{
   order: Order | null;
-  isOpen: boolean;
+  isOpen?: boolean;
   onClose: () => void;
   onNewSale?: () => void;
-}> = ({ order, isOpen, onClose, onNewSale }) => {
+  settings?: any;
+}> = ({ order, isOpen = true, onClose, onNewSale }) => {
   const { settings } = useStore();
   const [activeTab, setActiveTab] = useState<'a4' | 'thermal'>('a4');
   const [copiedShare, setCopiedShare] = useState(false);
