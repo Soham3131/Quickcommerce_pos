@@ -1,10 +1,6 @@
 Set-Location -Path $PSScriptRoot
-Write-Host "Pushing Avani Grocers to GitHub..." -ForegroundColor Cyan
-git init
-git branch -M main
-try { git remote remove origin 2>$null } catch {}
-git remote add origin https://github.com/Soham3131/Quickcommerce_pos.git
+Write-Host "Pushing Fix to GitHub..." -ForegroundColor Cyan
 git add .
-git commit -m "first commit - Avani Grocers Vercel Demo Mode"
-git push -u origin main
-Write-Host "Done!" -ForegroundColor Green
+git commit -m "fix: remove invalid page export STORE_CATEGORIES for Next.js build"
+git push origin main
+Write-Host "Done! Vercel will automatically redeploy." -ForegroundColor Green

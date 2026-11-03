@@ -37,7 +37,7 @@ interface CategoryItem {
   description: string;
 }
 
-export const STORE_CATEGORIES: CategoryItem[] = [
+const STORE_CATEGORIES: CategoryItem[] = [
   {
     name: 'Fruits & Vegetables',
     slug: 'fruits-vegetables',
