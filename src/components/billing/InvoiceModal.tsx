@@ -15,7 +15,7 @@ import {
 import { Order } from '@/types';
 import { useStore } from '@/store/useStore';
 import { formatCurrency } from '@/lib/currency';
-import { formatDateTime, generateBarcodeSvg } from '@/lib/utils';
+import { cn, formatDateTime, generateBarcodeSvg } from '@/lib/utils';
 
 export const InvoiceModal: React.FC<{
   order: Order | null;
