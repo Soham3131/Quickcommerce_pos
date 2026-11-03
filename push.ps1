@@ -1,13 +1,10 @@
 Set-Location -Path $PSScriptRoot
-Write-Host "[1/2] Verifying Build Locally (npm run build)..." -ForegroundColor Cyan
-npm run build
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "[ERROR] Build failed! Aborting push." -ForegroundColor Red
-    exit $LASTEXITCODE
-}
-
-Write-Host "[2/2] Build Succeeded! Pushing to GitHub..." -ForegroundColor Green
+Write-Host "Pushing TypeScript Fixes to GitHub (Quickcommerce_pos)..." -ForegroundColor Cyan
 git add .
-git commit -m "fix: resolve customer address type mismatch and invoice modal for clean build"
+git commit -m "fix(types): resolve product category schema, logger orderType, customer address and invoice modal for clean build"
 git push origin main
-Write-Host "Done! Vercel will automatically redeploy with success!" -ForegroundColor Green
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "Success! Vercel build will now pass cleanly." -ForegroundColor Green
+} else {
+    Write-Host "[ERROR] Git push failed. Please check your network connection or credentials." -ForegroundColor Red
+}

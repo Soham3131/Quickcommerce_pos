@@ -16,12 +16,26 @@ export const registerSchema = z.object({
 });
 
 // --- Product Schemas ---
+export const productCategorySchema = z.enum([
+  'Fruits & Vegetables',
+  'Dairy & Eggs',
+  'Bakery & Bread',
+  'Grocery & Staples',
+  'Beverages',
+  'Snacks & Sweets',
+  'Personal Care',
+  'Household & Cleaning',
+  'Frozen Foods',
+]);
+
+export const productUnitSchema = z.enum(['kg', 'g', 'L', 'ml', 'pcs', 'pack', 'box']);
+
 export const createProductSchema = z.object({
   name: z.string().trim().min(2, 'Product name is required'),
   sku: z.string().trim().min(2).max(50).toUpperCase(),
   barcode: z.string().trim().optional(),
   description: z.string().optional(),
-  category: z.string().min(1, 'Category is required'),
+  category: productCategorySchema,
   brand: z.string().optional(),
   image: z.string().min(1, 'Product image URL is required'),
   purchasePrice: z.number().nonnegative('Purchase price must be >= 0'),
@@ -29,7 +43,7 @@ export const createProductSchema = z.object({
   mrp: z.number().nonnegative().optional(),
   taxRate: z.number().min(0).max(100).default(5),
   hsnCode: z.string().optional(),
-  unit: z.enum(['kg', 'g', 'L', 'ml', 'pcs', 'pack', 'box']).default('pcs'),
+  unit: productUnitSchema.default('pcs'),
   currentStock: z.number().int().nonnegative().default(0),
   minStock: z.number().int().nonnegative().default(5),
   status: z.enum(['active', 'inactive', 'discontinued']).default('active'),
@@ -172,7 +186,7 @@ export const createPurchaseSchema = z.object({
         productId: z.string().min(1),
         productName: z.string().min(1),
         sku: z.string().min(1),
-        unit: z.string().default('pcs'),
+        unit: productUnitSchema.default('pcs'),
         quantity: z.number().positive(),
         unitPrice: z.number().nonnegative(),
         taxRate: z.number().default(0),

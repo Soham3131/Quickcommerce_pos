@@ -1,7 +1,11 @@
 import { connectToDatabase, isDatabaseConnected } from '@/lib/db';
 import { ProductModel, IProduct } from '@/models/Product';
 import { dataStore } from '../storage/dataStore';
-import { Product } from '@/types';
+import { Product, ProductCategory } from '@/types';
+
+export type ProductInputData = Partial<Omit<Product, 'category'>> & {
+  category?: ProductCategory | string;
+};
 
 export interface ProductQueryParams {
   search?: string;
@@ -142,7 +146,7 @@ export async function getProductByIdServer(id: string): Promise<Product | null> 
   return found || null;
 }
 
-export async function createProductServer(data: Partial<Product>, actorName: string): Promise<Product> {
+export async function createProductServer(data: ProductInputData, actorName: string): Promise<Product> {
   await connectToDatabase();
 
   const sku = (data.sku || `SKU-${Date.now()}`).toUpperCase().trim();
@@ -177,7 +181,7 @@ export async function createProductServer(data: Partial<Product>, actorName: str
       description: data.description || '',
       sku,
       barcode: data.barcode || `${Date.now()}`,
-      category: data.category || 'Grocery & Staples',
+      category: (data.category as ProductCategory) || 'Grocery & Staples',
       brand: data.brand || 'Avani',
       image: data.image || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=500&q=80',
       purchasePrice: data.purchasePrice || 0,
@@ -185,7 +189,7 @@ export async function createProductServer(data: Partial<Product>, actorName: str
       mrp: data.mrp || data.sellingPrice || 0,
       taxRate: data.taxRate || 0,
       hsnCode: data.hsnCode || '08081000',
-      unit: data.unit || 'pcs',
+      unit: (data.unit as any) || 'pcs',
       currentStock: data.currentStock || 0,
       minStock: data.minStock || 5,
       supplierId: data.supplierId || '',
@@ -203,7 +207,7 @@ export async function createProductServer(data: Partial<Product>, actorName: str
   }
 }
 
-export async function updateProductServer(id: string, updates: Partial<Product>, actorName: string): Promise<Product> {
+export async function updateProductServer(id: string, updates: ProductInputData, actorName: string): Promise<Product> {
   await connectToDatabase();
 
   if (isDatabaseConnected()) {
@@ -218,9 +222,10 @@ export async function updateProductServer(id: string, updates: Partial<Product>,
     const product = dataStore.products.get(id);
     if (!product) throw new Error('Product not found');
 
-    const updated = {
+    const updated: Product = {
       ...product,
       ...updates,
+      category: (updates.category as ProductCategory) || product.category,
       updatedAt: new Date().toISOString(),
     };
     dataStore.products.set(id, updated);

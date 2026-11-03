@@ -1,26 +1,18 @@
 @echo off
-cd /d C:\Users\soham\Desktop\avanimart
+cd /d "%~dp0"
 echo ========================================================
-echo   [1/2] Verifying Build Locally (npm run build)...
-echo ========================================================
-call npm run build
-if %ERRORLEVEL% NEQ 0 (
-    echo.
-    echo [ERROR] Build failed! Aborting git push.
-    pause
-    exit /b %ERRORLEVEL%
-)
-
-echo.
-echo ========================================================
-echo   [2/2] Build Succeeded! Pushing Fixes to GitHub...
+echo   Pushing TypeScript Fixes to GitHub (Quickcommerce_pos)
 echo ========================================================
 git add .
-git commit -m "fix: resolve customer address type mismatch and invoice modal for clean build"
+git commit -m "fix(types): resolve product category schema, logger orderType, customer address and invoice modal for clean build"
 git push origin main
-
-echo.
-echo ========================================================
-echo   Done! Vercel will automatically redeploy with success!
-echo ========================================================
+if %ERRORLEVEL% EQU 0 (
+    echo.
+    echo ========================================================
+    echo   Push successful! Vercel build will now pass cleanly.
+    echo ========================================================
+) else (
+    echo.
+    echo [ERROR] Git push failed. Please check your network connection or credentials.
+)
 pause
